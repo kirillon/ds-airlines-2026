@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "airlines-ingestion"
+version = "0.1.0"
+description = "Bounded SkyTeam PDF schedule ingestion"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "numpy==2.2.6",
+  "openpyxl>=3.1.5",
+  "pandas==2.3.3",
+  "pyarrow==20.0.0",
+  "pydantic==2.12.3",
+  "pypdfium2==4.30.0",
+]
+
+[project.scripts]
+airlines-pdf = "parsers.pdf.cli:main"
+
+[project.optional-dependencies]
+backend = ["fastapi==0.119.1", "uvicorn==0.38.0"]
+
+[dependency-groups]
+dev = ["pytest==8.4.2", "ruff==0.14.1", "mypy==1.18.2", "reportlab==4.4.4"]
+
+[tool.setuptools.packages.find]
+include = ["models*", "parsers*", "backend*"]
+exclude = ["*.tests*"]
+
+[tool.setuptools.package-data]
+backend = ["resources/*.parquet"]
+
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+check_untyped_defs = true
+explicit_package_bases = true
+exclude = ["/tests/"]

@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "airlines-ml"
+version = "0.1.0"
+description = "Passenger-history Local Outlier Factor research pipeline"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "babel==2.17.0",
+  "kneed==0.8.5",
+  "matplotlib==3.10.7",
+  "numpy==2.2.6",
+  "polars==1.35.2",
+  "pyarrow==20.0.0",
+  "pycountry==26.2.16",
+  "scikit-learn==1.7.2",
+  "scipy==1.16.3",
+  "unidecode==1.4.0",
+]
+
+[project.optional-dependencies]
+gpu = ["cuml-cu12==26.10.0", "cupy-cuda12x==14.0.1"]
+
+[project.scripts]
+airlines-ml = "airlines_ml.cli:main"
+
+[dependency-groups]
+dev = ["pytest==8.4.2", "ruff==0.14.1", "mypy==1.18.2"]
+
+[[tool.uv.index]]
+name = "nvidia"
+url = "https://pypi.nvidia.com"
+explicit = true
+
+[tool.uv.sources]
+cuml-cu12 = { index = "nvidia" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+ignore_missing_imports = true
+check_untyped_defs = true

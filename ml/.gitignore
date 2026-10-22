@@ -1,0 +1,7 @@
+.venv/
+artifacts/
+*.parquet
+!resources/airports.parquet
+!resources/countries.parquet
+
+output/
